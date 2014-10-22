@@ -1,0 +1,9 @@
+examples
+dev
+docs
+coverage
+node_modules
+TODO
+*.sublime-*
+*.cmd
+*.sh

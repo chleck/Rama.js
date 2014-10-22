@@ -1,0 +1,43 @@
+{
+  "name": "rama.js",
+  "version": "0.0.0",
+  "dependencies": {
+    "formidable": "^1.0.15"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-load-plugins": "^0.6.0",
+    "gulp-jshint": "^1.8.4",
+    "jaguarjs-jsdoc": "0.0.1",
+    "should": "^4.1.0",
+    "supertest": "^0.14.0",
+    "istanbul": "^0.3.2",
+    "mocha": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/"
+  },
+  "description": "Web framework for Node.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:chleck/Rama.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chleck/Rama.js/issues"
+  },
+  "homepage": "https://github.com/chleck/Rama.js/wiki",
+  "keywords": [
+    "http",
+    "framework"
+  ],
+  "author": {
+    "name": "Dmitry A. Chleck",
+    "email": "dmitrychleck+github@gmail.com"
+  },
+  "license": "GNU GPL v2.0"
+}
