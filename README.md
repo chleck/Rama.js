@@ -1,9 +1,7 @@
-# Shop Core
+# Rama.js
 
-## Deploy
+## Install
 
-```
-$ npm i -g gulp jsdoc
-$ npm i
-$ gulp
+```sh
+$ npm i rama.js --save
 ```
