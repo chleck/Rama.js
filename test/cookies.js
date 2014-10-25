@@ -1,3 +1,5 @@
+'use strict';
+
 var request = require('supertest');
 
 var Rama = require('..');
@@ -22,7 +24,6 @@ describe('Cookies', function() {
   describe('req.cookie()', function() {
     it('should set cookie', function(done) {
       var f = Rama.exec(new Rama.Cookies(), function(req, res) {
-        return res.end();
         if(req.url === '/set') {
           res.cookie('test', 'Test!').end();
         } else {

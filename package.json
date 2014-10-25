@@ -12,7 +12,10 @@
     "should": "^4.1.0",
     "supertest": "^0.14.0",
     "istanbul": "^0.3.2",
-    "mocha": "^2.0.0"
+    "mocha": "^2.0.0",
+    "gulp-jsdoc-to-markdown": "^0.1.5",
+    "gulp-rename": "^1.2.0",
+    "gulp-concat": "^2.4.1"
   },
   "engines": {
     "node": ">=0.10.0"

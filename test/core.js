@@ -1,3 +1,5 @@
+'use strict';
+
 var request = require('supertest');
 
 var $$ = require('..');
@@ -7,7 +9,7 @@ function wrapper(mw, f) {
     mw(req, res, function() {
       f(req, res);
     });
-  }
+  };
 }
 
 describe('Core', function() {
@@ -137,7 +139,7 @@ describe('Core', function() {
     describe('.header(name, value, true)', function() {
       it('should append to the current values of the response header', function(done) {
         var f = wrapper(new $$.Core(), function(req, res) {
-          res.header('Set-Cookie', 'a')
+          res.header('Set-Cookie', 'a');
           res.header('Set-Cookie', 'b', true).should.equal(res);
           res.done();
         });

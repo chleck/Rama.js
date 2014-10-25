@@ -1,3 +1,5 @@
+'use strict';
+
 var core = require('..');
 
 describe('Router', function() {
@@ -13,21 +15,21 @@ describe('Router', function() {
   });
   it('should support "before routing" middleware', function(done) {
     var router = new core.Router();
-    router.before(function(req, res, next) {
+    router.before(function(req, res) {
       res.end();
     });
     router({}, { end: done });
   });
   it('should support "after routing" middleware', function(done) {
     var router = new core.Router();
-    router.after(function(req, res, next) {
+    router.after(function(req, res) {
       res.end();
     });
     router({}, { end: done });
   });
   it('should support routing', function(done) {
     var router = new core.Router();
-    router.on('', '', function(req, res, next) {
+    router.on('', '', function(req, res) {
       res.end();
     });
     router({ url: '' }, { end: done });
@@ -39,7 +41,7 @@ describe('Router', function() {
         res.cnt++;
         next();
       },
-      function(req, res, next) {
+      function(req, res) {
         res.cnt.should.equal(1);
         res.end();
       }
@@ -50,7 +52,7 @@ describe('Router', function() {
     var router = new core.Router();
     router
       .on('', '', function(){})
-      .on('blog', '!/blog/{year/\\d{4}/}/json', function(req, res, next) {
+      .on('blog', '!/blog/{year/\\d{4}/}/json', function(req, res) {
         req.args.year.should.equal('1984');
         res.end();
       });

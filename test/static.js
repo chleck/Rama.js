@@ -1,11 +1,13 @@
+'use strict';
+
 var request = require('supertest');
 
 var Rama = require('..');
 
 describe('Static', function() {
   it('should return a Static middleware', function() {
-    var static = new Rama.Static();
-    static.should.be.a.Function;
+    var srv = new Rama.Static();
+    srv.should.be.a.Function;
   });
   it('should serve files', function(done) {
     var f = new Rama.Static({ prefix: '', root: __dirname + '/files' });

@@ -17,5 +17,15 @@
   "unused": true,
   "strict": true,
   "maxlen": 160,
-  "validthis": true
+  "validthis": true,
+  "expr": true,
+  "globals": {
+    /* MOCHA */
+    "after": false,
+    "afterEach": false,
+    "before": false,
+    "beforeEach": false,
+    "describe": false,
+    "it": false
+  }
 }

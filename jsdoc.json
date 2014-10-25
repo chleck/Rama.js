@@ -1,6 +1,5 @@
 {
   "opts": {
-    "template": "node_modules/jaguarjs-jsdoc",
     "encoding": "utf8",
     "destination": "./docs/",
     "recurse": true,

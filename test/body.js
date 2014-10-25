@@ -1,7 +1,8 @@
+'use strict';
+
 var request = require('supertest');
 
 var Rama = require('..');
-var Body = Rama.Body;
 
 describe('Body', function() {
   it('should return a Body middleware', function() {

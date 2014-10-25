@@ -1,4 +1,6 @@
-var request = require('supertest');
+'use strict';
+
+// var request = require('supertest');
 
 var Rama = require('..');
 
