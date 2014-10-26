@@ -2,7 +2,7 @@
 
 var request = require('supertest');
 
-var $$ = require('..');
+var Rama = require('..');
 
 function wrapper(mw, f) {
   return function(req, res) {
@@ -14,11 +14,11 @@ function wrapper(mw, f) {
 
 describe('Core', function() {
   it('should return a Core middleware', function() {
-    var core = new $$.Core();
+    var core = new Rama.Core();
     core.should.be.a.Function;
   });
   it('should extend HTTP request and response', function() {
-    var core = new $$.Core();
+    var core = new Rama.Core();
     var req = {
       headers: { host: 'example.com:8080' },
       url: '/api/v2?q=test&rnd=8374'
@@ -49,7 +49,7 @@ describe('Core', function() {
   describe('res', function() {
     describe('.done()', function() {
       it('should close response', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.done().should.equal(res);
         });
         request(f)
@@ -59,7 +59,7 @@ describe('Core', function() {
     });
     describe('.done(data)', function() {
       it('should writes data and close response', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.done('test').should.equal(res);
         });
         request(f)
@@ -69,7 +69,7 @@ describe('Core', function() {
     });
     describe('.send()', function() {
       it('should send a string', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.send('aaa').should.equal(res);
           res.done();
         });
@@ -80,7 +80,7 @@ describe('Core', function() {
     });
     describe('.status(code)', function() {
       it('should send a status code', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.status(201).should.equal(res);
           res.done();
         });
@@ -91,7 +91,7 @@ describe('Core', function() {
     });
     describe('.status(code, msg)', function() {
       it('should send a status code with text message', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.status(201, 'Ok!').should.equal(res);
           res.done();
         });
@@ -102,7 +102,7 @@ describe('Core', function() {
     });
     describe('.status()', function() {
       it('should return the current status code', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.status(201).done('Status is ' + res.status());
         });
         request(f)
@@ -112,7 +112,7 @@ describe('Core', function() {
     });
     describe('.header(name, value)', function() {
       it('should set a response header', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.header('Test-Header', 'TestHeaderValue').should.equal(res);
           res.done();
         });
@@ -124,7 +124,7 @@ describe('Core', function() {
     // TODO Array forks fine for 'Set-Cookie' header only. Why? Is it a bug of the supertest?
     describe('.header(name, array)', function() {
       it('should set multiple response headers', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.header('Set-Cookie', [ 'a', 'b', 'c' ]).should.equal(res);
           res.done();
         });
@@ -138,7 +138,7 @@ describe('Core', function() {
     });
     describe('.header(name, value, true)', function() {
       it('should append to the current values of the response header', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.header('Set-Cookie', 'a');
           res.header('Set-Cookie', 'b', true).should.equal(res);
           res.done();
@@ -153,7 +153,7 @@ describe('Core', function() {
     });
     describe('.header(name)', function() {
       it('should return the value of the response header', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.header('Test-Header', 'TestHeaderValue');
           res.done('Test-Header is ' + res.header('Test-Header'));
         });
@@ -164,7 +164,7 @@ describe('Core', function() {
     });
     describe('.header(name, null)', function() {
       it('should remove the header', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.header('Test-Header', 'TestHeaderValue');
           res.header('Test-Header', null).should.equal(res);
           res.done();
@@ -179,7 +179,7 @@ describe('Core', function() {
     });
     describe('.moved(location, temporarily)', function() {
       it('should set "Location" header and status code 301 when temporarily is false', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.moved('/').should.equal(res);
           res.done();
         });
@@ -189,7 +189,7 @@ describe('Core', function() {
           .expect('Location', '/', done);
       });
       it('should set "Location" header and status code 302 when temporarily is true', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.moved('/', true).should.equal(res);
           res.done();
         });
@@ -201,7 +201,7 @@ describe('Core', function() {
     });
     describe('.unauthorized(msg)', function() {
       it('should set status code 401 when msg is not defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.unauthorized('').should.equal(res);
           res.done();
         });
@@ -210,7 +210,7 @@ describe('Core', function() {
           .expect(401, '', done);
       });
       it('should set status code 401 and write msg when msg is defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.unauthorized('test').should.equal(res);
           res.done();
         });
@@ -221,7 +221,7 @@ describe('Core', function() {
     });
     describe('.forbidden(msg)', function() {
       it('should set status code 403 when msg is not defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.forbidden('').should.equal(res);
           res.done();
         });
@@ -230,7 +230,7 @@ describe('Core', function() {
           .expect(403, '', done);
       });
       it('should set status code 403 and write msg when msg is defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.forbidden('test').should.equal(res);
           res.done();
         });
@@ -241,7 +241,7 @@ describe('Core', function() {
     });
     describe('.notFound(msg)', function() {
       it('should set status code 404 when msg is not defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.notFound('').should.equal(res);
           res.done();
         });
@@ -250,7 +250,7 @@ describe('Core', function() {
           .expect(404, '', done);
       });
       it('should set status code 404 and write msg when msg is defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.notFound('test').should.equal(res);
           res.done();
         });
@@ -261,7 +261,7 @@ describe('Core', function() {
     });
     describe('.error(msg)', function() {
       it('should set status code 500 when msg is not defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.error('').should.equal(res);
           res.done();
         });
@@ -270,7 +270,7 @@ describe('Core', function() {
           .expect(500, '', done);
       });
       it('should set status code 500 and write msg when msg is defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.error('test').should.equal(res);
           res.done();
         });
@@ -281,7 +281,7 @@ describe('Core', function() {
     });
     describe('.mime(mime)', function() {
       it('should set "Content-Type" header', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.mime('text/plain').should.equal(res);
           res.done();
         });
@@ -293,7 +293,7 @@ describe('Core', function() {
     });
     describe('.refresh(location, timeout)', function() {
       it('should set "Refresh" header with 0 timeout when timeout is not defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.refresh('/').should.equal(res);
           res.done();
         });
@@ -303,7 +303,7 @@ describe('Core', function() {
           .expect('Refresh', '0; url=/', done);
       });
       it('should set "Refresh" header with given timeout when timeout is defined', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.refresh('/', 10).should.equal(res);
           res.done();
         });
@@ -315,7 +315,7 @@ describe('Core', function() {
     });
     describe('.die(e)', function() {
       it('should set status code 500 and write error message when error is String', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.die('Error!').should.equal(res);
           // res.done();
         });
@@ -324,7 +324,7 @@ describe('Core', function() {
           .expect(500, 'Error!', done);
       });
       it('should set status code 500 and write error name, message and stack trace when error is Error', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.die(new Error('Exception!')).should.equal(res);
         });
         request(f)
@@ -337,7 +337,7 @@ describe('Core', function() {
     });
     describe('.json(data)', function() {
       it('should set "Content-Type" header to "application/json" and write data as JSON', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.json({ a: 1, b: true, c: 'test' }).should.equal(res);
           res.done();
         });
@@ -353,7 +353,7 @@ describe('Core', function() {
           .end(done);
       });
       it('should set "Content-Type" header to "application/json" and write data as pretty JSON', function(done) {
-        var f = wrapper(new $$.Core(), function(req, res) {
+        var f = wrapper(new Rama.Core(), function(req, res) {
           res.json({ a: 1, b: true, c: 'test' }, true).should.equal(res);
           res.done();
         });

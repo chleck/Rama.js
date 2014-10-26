@@ -79,6 +79,7 @@ describe('Cookies', function() {
         }
       });
       var agent = request.agent(f);
+      // FIXME!!!
       agent
       .get('/set')
       .expect(200, '', function() {

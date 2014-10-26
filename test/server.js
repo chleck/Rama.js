@@ -25,8 +25,8 @@ describe('Rama', function() {
   });
   describe('.run()', function() {
     it('should run HTTP server', function(done) {
-      var rama = new Rama(function(req, res) {
-        res.end();
+      var rama = new Rama(function(req, res, next) {
+        next();
       });
       rama.listen('localhost', 9081).run();
       http.get('http://localhost:9081', function(res) {
@@ -37,8 +37,8 @@ describe('Rama', function() {
       });
     });
     it('should run HTTPS server', function(done) {
-      var rama = new Rama(function(req, res) {
-        res.end();
+      var rama = new Rama(function(req, res, next) {
+        next();
       });
       rama.listen('localhost', 9082, __dirname + '/files/cert.pem', __dirname + '/files/key.pem').run();
       https.get('https://localhost:9082', function(res) {
@@ -47,6 +47,19 @@ describe('Rama', function() {
       }).on('error', function(e) {
         throw e;
       });
+    });
+  });
+  it('should not fail on middleware exception', function(done) {
+    var rama = new Rama(function(req, res, next) {
+      // next();
+      throw new Error('Test exception');
+    });
+    rama.listen('localhost', 9083).run();
+    http.get('http://localhost:9083', function(res) {
+      res.statusCode.should.eql(200);
+      done();
+    }).on('error', function(e) {
+      throw e;
     });
   });
 });
