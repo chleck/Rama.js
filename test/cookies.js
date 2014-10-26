@@ -21,8 +21,55 @@ describe('Cookies', function() {
       .get('/')
       .expect(200, '', done);
   });
-  describe('req.cookie()', function() {
+  describe('res.cookie()', function() {
     it('should set cookie', function(done) {
+      var f = Rama.exec(new Rama.Cookies(), function(req, res) {
+        res.cookie('test', 'Test!').end();
+      });
+      request(f)
+      .get('/')
+      .end(function(err, res) {
+        res.headers['set-cookie'][0].should.containEql('test=Test!');
+        done();
+      });
+    });
+    it('should set cookie with expires by Date', function(done) {
+      var date = new Date();
+      var f = Rama.exec(new Rama.Cookies(), function(req, res) {
+        res.cookie('test', 'Test!', { expires: date }).end();
+      });
+      request(f)
+      .get('/')
+      .end(function(err, res) {
+        res.headers['set-cookie'][0].should.containEql('Expires=' + date.toUTCString());
+        done();
+      });
+    });
+    it('should set cookie with expires by timeout', function(done) {
+      var f = Rama.exec(new Rama.Cookies(), function(req, res) {
+        res.cookie('test', 'Test!', { expires: 1 }).end();
+      });
+      request(f)
+      .get('/')
+      .end(function(err, res) {
+        res.headers['set-cookie'][0].should.containEql('Expires=');
+        done();
+      });
+    });
+    it('should remove cookie', function(done) {
+      var f = Rama.exec(new Rama.Cookies(), function(req, res) {
+        res.cookie('test', null).end();
+      });
+      request(f)
+      .get('/')
+      .end(function(err, res) {
+        res.headers['set-cookie'][0].should.containEql('Expires=' + (new Date(1).toUTCString()));
+        done();
+      });
+    });
+  });
+  describe('req.cookies', function() {
+    it('should get previously set cookie', function(done) {
       var f = Rama.exec(new Rama.Cookies(), function(req, res) {
         if(req.url === '/set') {
           res.cookie('test', 'Test!').end();
@@ -34,7 +81,6 @@ describe('Cookies', function() {
       var agent = request.agent(f);
       agent
       .get('/set')
-      .expect(200, '')
       .expect(200, '', function() {
         agent
         .get('/get')

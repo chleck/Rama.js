@@ -9,6 +9,14 @@ describe('Sessions', function() {
     var sessions = new Rama.Sessions();
     sessions.should.be.a.Function;
   });
+  // it('should throw error', function(done) {
+  //   var f = Rama.exec(new Rama.Sessions(), function(req, res) {
+  //     res.end();
+  //   });
+  //   request(f)
+  //   .get('/')
+  //   .expect(200, '', done);
+  // });
   it('should extend HTTP request', function(done) {
     var f = Rama.exec(new Rama.Cookies(), new Rama.Sessions(), function(req, res) {
       req.should.have.property('session');
