@@ -24,18 +24,18 @@ describe('Rama', function() {
     });
   });
   describe('.run()', function() {
-    // it('should run HTTP server', function(done) {
-    //   var rama = new Rama(function(req, res, next) {
-    //     next();
-    //   });
-    //   rama.listen('localhost', 9081).run();
-    //   http.get('http://localhost:9081', function(res) {
-    //     res.statusCode.should.eql(200);
-    //     done();
-    //   }).on('error', function(e) {
-    //     throw e;
-    //   });
-    // });
+    it('should run HTTP server', function(done) {
+      var rama = new Rama(function(req, res, next) {
+        next();
+      });
+      rama.listen('localhost', 9081).run();
+      http.get('http://localhost:9081', function(res) {
+        res.statusCode.should.eql(200);
+        done();
+      }).on('error', function(e) {
+        throw e;
+      });
+    });
     it('should run HTTPS server', function(done) {
       var rama = new Rama(function(req, res, next) {
         next();
