@@ -41,9 +41,7 @@ describe('Rama', function() {
         next();
       });
       rama.listen('localhost', 9082, __dirname + '/files/cert.pem', __dirname + '/files/key.pem').run();
-      console.log('222222222222222222222');
       https.get('https://localhost:9082', function(res) {
-        console.log('3333333333333333333333');
         res.statusCode.should.eql(200);
         done();
       }).on('error', function(e) {
