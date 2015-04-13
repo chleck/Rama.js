@@ -6,5 +6,7 @@ me.Body = require('./lib/body');
 me.Cookies = require('./lib/cookies');
 me.Sessions = require('./lib/sessions');
 me.Static = require('./lib/static');
+me.Jade = require('./lib/jade');
+me.Stylus = require('./lib/stylus');
 
 module.exports = me;
